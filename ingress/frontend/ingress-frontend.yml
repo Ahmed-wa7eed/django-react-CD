@@ -4,7 +4,7 @@ metadata:
   name: frontend-ingress
   namespace: frontend
 spec:
-  ingressclassName: nginx
+  ingressClassName: nginx
   rules:
   - host: a188238f8c3c3492aa038e551d62c8ad-960590671.us-east-2.elb.amazonaws.com
     http:
