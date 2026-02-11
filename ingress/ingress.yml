@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: micro-ingress
-  namespace: ingress
+  namespace: frontend
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: a0713f02f58544f61927db6623c89f5d-519cc3887cdd3603.elb.us-east-1.amazonaws.com
+    - host: a188238f8c3c3492aa038e551d62c8ad-960590671.us-east-2.elb.amazonaws.com 
       http:
         paths:
           - path: /
