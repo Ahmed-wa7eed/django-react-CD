@@ -1,20 +1,45 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: backend-ingress
+#   namespace: backend
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /$2
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#   - host: a188238f8c3c3492aa038e551d62c8ad-960590671.us-east-2.elb.amazonaws.com
+#     http:
+#       paths:
+#       - path: /api(/|$)(.*)
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: backend
+#             port:
+#               number: 8000
+
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: backend-ingress
+  name: ingress-backend
   namespace: backend
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
 spec:
   ingressClassName: nginx
   rules:
-  - host: a188238f8c3c3492aa038e551d62c8ad-960590671.us-east-2.elb.amazonaws.com
-    http:
-      paths:
-      - path: /api(/|$)(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: backend
-            port:
-              number: 8000
+    - host: a5a97460ce8ac414eb63e4cf5f0a5e37-1845652287.us-east-2.elb.amazonaws.com
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8000
+              
