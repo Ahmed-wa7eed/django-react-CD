@@ -1,23 +1,47 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: ingress-frontend
+#   namespace: frontend
+#   annotations:
+#     alb.ingress.kubernetes.io/scheme: internet-facing
+#     alb.ingress.kubernetes.io/target-type: ip
+#     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#     - host: a5a97460ce8ac414eb63e4cf5f0a5e37-1845652287.us-east-2.elb.amazonaws.com
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: frontend
+#                 port:
+#                   number: 80
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-frontend
+  name: frontend-ingress
   namespace: frontend
   annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - nti.waheed3013.shop
+    secretName: nti-waheed3013-tls
   rules:
-    - host: a5a97460ce8ac414eb63e4cf5f0a5e37-1845652287.us-east-2.elb.amazonaws.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: frontend
-                port:
-                  number: 80
-
+  - host: nti.waheed3013.shop
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80
